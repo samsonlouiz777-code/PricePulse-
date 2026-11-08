@@ -173,18 +173,46 @@ footer {
 </footer>
 
 <script>
+function searchProducts() {const products = [
+ {name:"Samsung Galaxy A05",price:"KSh 10,999"},
+ {name:"Tecno Spark Go",price:"KSh 9,999"},
+ {name:"Redmi A3",price:"KSh 10,500"},
+ {name:"Samsung 32-inch TV",price:"KSh 18,999"},
+ {name:"Vitron 32-inch TV",price:"KSh 11,999"},
+ {name:"Ramtons Refrigerator",price:"KSh 27,999"},
+ {name:"HP Core i5 Laptop",price:"KSh 35,000"}
+];
+
 function searchProducts() {
-    let input = document.getElementById("search")
-        .value.toLowerCase();
+ const input = document.getElementById("search").value.toLowerCase();
 
-    let cards = document.querySelectorAll(".card");
+ let results = document.getElementById("search-results");
 
-    cards.forEach(function(card) {
-        card.style.display =
-            card.innerText.toLowerCase().includes(input)
-            ? "block"
-            : "none";
-    });
+ if (!results) {
+   results = document.createElement("div");
+   results.id = "search-results";
+   document.getElementById("search").after(results);
+ }
+
+ if (!input) {
+   results.innerHTML = "";
+   return;
+ }
+
+ const matches = products.filter(p =>
+   p.name.toLowerCase().includes(input)
+ );
+
+ results.innerHTML = matches.length
+ ? matches.map(p =>
+   `<div class="card">
+      <h3>${p.name}</h3>
+      <h2>${p.price}</h2>
+      <small>Illustrative demo price — not verified</small>
+    </div>`
+ ).join("")
+ : "No matching products found.";
+}
 }
 </script>
 
