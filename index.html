@@ -201,7 +201,7 @@ function searchProducts() {const products = [
  const matches = products.filter(p =>
    p.name.toLowerCase().includes(input)
  );
-
+    
  results.innerHTML = matches.length
  ? matches.map(p =>
    `<div class="card">
