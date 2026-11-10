@@ -222,7 +222,7 @@ function searchProducts() {const products = [
     placeholder="Enter product name"
     style="width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;">
 
-  <button onclick="compareProduct()"
+  <button onclick="runPriceComparison()"
     style="width:100%;padding:13px;margin-top:10px;background:#087443;color:white;border:0;border-radius:8px;">
     Compare Prices
   </button>
@@ -231,7 +231,7 @@ function searchProducts() {const products = [
 </section>
 
 <script>
-function compareProduct() {
+function runPriceComparison() {
   const product = document.getElementById("compareProduct").value.trim();
   const results = document.getElementById("comparisonResults");
 
