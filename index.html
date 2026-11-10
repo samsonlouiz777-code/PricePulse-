@@ -214,6 +214,40 @@ function searchProducts() {const products = [
 }
 </script>
 
+<section id="seller-comparison" style="padding:25px; background:#f1f5f9; border-radius:15px; margin:20px 10px;">
+  <h2 style="color:#123b2a;">Compare Kenyan Sellers 🇰🇪</h2>
+  <p>Compare prices before you buy.</p>
+
+  <input id="compareProduct" type="text"
+    placeholder="Enter product name"
+    style="width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;">
+
+  <button onclick="compareProduct()"
+    style="width:100%;padding:13px;margin-top:10px;background:#087443;color:white;border:0;border-radius:8px;">
+    Compare Prices
+  </button>
+
+  <div id="comparisonResults" style="margin-top:15px;"></div>
+</section>
+
+<script>
+function compareProduct() {
+  const product = document.getElementById("compareProduct").value.trim();
+  const results = document.getElementById("comparisonResults");
+
+  if (!product) {
+    results.innerHTML = "Please enter a product name.";
+    return;
+  }
+
+  results.innerHTML = `
+    <h3>Searching for: ${product.replace(/[&<>"']/g, "")}</h3>
+    <p>Seller comparison is coming soon!</p>
+    <p>We are preparing verified Kenyan seller prices.</p>
+  `;
+}
+</script>
+    
 </body>
                 </html>
                 
