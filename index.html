@@ -214,36 +214,89 @@ function searchProducts() {const products = [
 }
 </script>
 
-<section id="seller-comparison" style="padding:25px; background:#f1f5f9; border-radius:15px; margin:20px 10px;">
-  <h2 style="color:#123b2a;">Compare Kenyan Sellers 🇰🇪</h2>
-  <p>Compare prices before you buy.</p>
+<section id="seller-comparison" style="padding:25px;background:#f1f5f9;border-radius:15px;margin:20px 10px;">
+  <h2 style="color:#087443;">Compare Kenyan Sellers 🇰🇪</h2>
+  <p>Find affordable products and compare seller prices.</p>
 
   <input id="compareProduct" type="text"
-    placeholder="Enter product name"
-    style="width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;">
+    placeholder="Search e.g. Samsung Galaxy A15"
+    style="width:100%;padding:14px;border:1px solid #ccc;border-radius:8px;">
 
   <button onclick="runPriceComparison()"
-    style="width:100%;padding:13px;margin-top:10px;background:#087443;color:white;border:0;border-radius:8px;">
+    style="width:100%;padding:14px;margin-top:12px;background:#087443;color:white;border:0;border-radius:8px;">
     Compare Prices
   </button>
 
-  <div id="comparisonResults" style="margin-top:15px;"></div>
+  <div id="comparisonResults" style="margin-top:20px;"></div>
 </section>
 
 <script>
+const sellerProducts = [
+  {
+    name: "Samsung Galaxy A15",
+    seller: "Demo Seller A",
+    price: 18500
+  },
+  {
+    name: "Samsung Galaxy A15",
+    seller: "Demo Seller B",
+    price: 19200
+  },
+  {
+    name: "Samsung Galaxy A15",
+    seller: "Demo Seller C",
+    price: 17800
+  },
+  {
+    name: "Tecno Spark Go",
+    seller: "Demo Seller A",
+    price: 9999
+  },
+  {
+    name: "Tecno Spark Go",
+    seller: "Demo Seller B",
+    price: 10500
+  }
+];
+
 function runPriceComparison() {
-  const product = document.getElementById("compareProduct").value.trim();
+  const product = document
+    .getElementById("compareProduct")
+    .value.trim().toLowerCase();
+
   const results = document.getElementById("comparisonResults");
 
   if (!product) {
-    results.innerHTML = "Please enter a product name.";
+    results.textContent = "Please enter a product name.";
     return;
   }
 
+  const matches = sellerProducts.filter(item =>
+    item.name.toLowerCase().includes(product)
+  );
+
+  if (matches.length === 0) {
+    results.textContent = "No matching products found yet.";
+    return;
+  }
+
+  matches.sort((a, b) => a.price - b.price);
+
   results.innerHTML = `
-    <h3>Searching for: ${product.replace(/[&<>"']/g, "")}</h3>
-    <p>Seller comparison is coming soon!</p>
-    <p>We are preparing verified Kenyan seller prices.</p>
+    <h3>${matches[0].name}</h3>
+    <p>Available comparison examples:</p>
+    ${matches.map((item, index) => `
+      <div style="background:white;padding:15px;margin:10px 0;border-radius:10px;">
+        <strong>${item.seller}</strong>
+        <h3 style="color:#087443;">
+          KSh ${item.price.toLocaleString("en-KE")}
+        </h3>
+        <small>${index === 0 ? "Lowest example price" : "Comparison price"}</small>
+      </div>
+    `).join("")}
+    <p style="color:#b45309;">
+      Demo prices only. Not verified live seller offers.
+    </p>
   `;
 }
 </script>
