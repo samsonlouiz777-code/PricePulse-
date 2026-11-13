@@ -344,6 +344,46 @@ function searchKenyanProducts() {
     : "<p>No matching products found.</p>";
 }
 </script>
+
+<section id="pricepulse-products" style="padding:20px;background:#f4f7fb;border-radius:12px;">
+  <h2>PRICEPULSE Product Database</h2>
+  <p>Find and compare products.</p>
+  <input id="ppSearch" type="text" placeholder="Search products..." style="padding:12px;width:90%;border:1px solid #ccc;border-radius:8px;">
+  <div id="ppResults"></div>
+</section>
+
+<script>
+const ppProducts = [
+  {name:"Cooking Oil 1L",price:250,shop:"Demo Shop"},
+  {name:"Sugar 2kg",price:320,shop:"Demo Shop"},
+  {name:"Rice 2kg",price:300,shop:"Demo Shop"},
+  {name:"Unga 2kg",price:180,shop:"Demo Shop"},
+  {name:"Milk 1L",price:80,shop:"Demo Shop"}
+];
+
+function ppDisplayProducts(search="") {
+  const results = document.getElementById("ppResults");
+  const filtered = ppProducts.filter(p =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  results.innerHTML = filtered.length
+    ? filtered.map(p => `
+      <div style="background:white;padding:12px;margin-top:10px;border-radius:8px;">
+        <strong>${p.name}</strong>
+        <p>KSh ${p.price}</p>
+        <small>${p.shop} — Sample price</small>
+      </div>
+    `).join("")
+    : "<p>No products found.</p>";
+}
+
+document.getElementById("ppSearch").addEventListener("input", e => {
+  ppDisplayProducts(e.target.value);
+});
+
+ppDisplayProducts();
+</script>
     
 </body>
                 </html>
