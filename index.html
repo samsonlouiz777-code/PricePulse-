@@ -307,6 +307,43 @@ function runPriceComparison() {
   `;
 }
 </script>
+
+<script>
+const pricepulseProducts = [
+  {name:"Samsung Galaxy A15",category:"Phones",price:18500,shop:"Kenya Electronics"},
+  {name:"Tecno Spark 20",category:"Phones",price:14500,shop:"Mobile Store"},
+  {name:"Oraimo Earbuds",category:"Accessories",price:2500,shop:"Gadget Hub"},
+  {name:"HP Laptop",category:"Computers",price:45000,shop:"Computer Centre"},
+  {name:"Bluetooth Speaker",category:"Electronics",price:1800,shop:"Gadget Hub"}
+];
+
+function searchKenyanProducts() {
+  const input = document.querySelector("#productSearch");
+  const results = document.querySelector("#searchResults");
+
+  if (!input || !results) {
+    alert("Product search area not found. Keep your existing page unchanged.");
+    return;
+  }
+
+  const query = input.value.trim().toLowerCase();
+
+  const matches = pricepulseProducts.filter(product =>
+    product.name.toLowerCase().includes(query) ||
+    product.category.toLowerCase().includes(query)
+  );
+
+  results.innerHTML = matches.length
+    ? matches.map(product => `
+      <div style="padding:15px;margin:10px 0;border:1px solid #ddd;border-radius:10px">
+        <h3>${product.name}</h3>
+        <p>Shop: ${product.shop}</p>
+        <strong>KSh ${product.price.toLocaleString()}</strong>
+      </div>
+    `).join("")
+    : "<p>No matching products found.</p>";
+}
+</script>
     
 </body>
                 </html>
