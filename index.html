@@ -384,6 +384,40 @@ document.getElementById("ppSearch").addEventListener("input", e => {
 
 ppDisplayProducts();
 </script>
+
+<section id="seller-comparison" style="padding:20px;background:#f1f5f9;border-radius:14px;margin:20px 0;">
+  <h2>🇰🇪 Kenyan Seller Comparison</h2>
+  <p>Compare prices from different Kenyan sellers.</p>
+
+  <input id="sellerProduct" type="text"
+    placeholder="Enter product name..."
+    style="width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;">
+
+  <button onclick="compareSellers()"
+    style="margin-top:12px;padding:12px 20px;background:#16a34a;color:white;border:0;border-radius:8px;">
+    Compare Sellers
+  </button>
+
+  <div id="sellerResults" style="margin-top:15px;"></div>
+</section>
+
+<script>
+function compareSellers() {
+  const product = document.getElementById("sellerProduct").value.trim();
+  const results = document.getElementById("sellerResults");
+
+  if (!product) {
+    results.innerHTML = "Please enter a product name.";
+    return;
+  }
+
+  results.innerHTML = `
+    <h3>Searching for: ${product.replace(/[&<>"']/g, "")}</h3>
+    <p>Seller comparison is coming soon!</p>
+    <p>We are preparing verified Kenyan seller prices.</p>
+  `;
+}
+</script>
     
 </body>
                 </html>
