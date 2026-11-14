@@ -351,14 +351,61 @@ function searchKenyanProducts() {
   <input id="ppSearch" type="text" placeholder="Search products..." style="padding:12px;width:90%;border:1px solid #ccc;border-radius:8px;">
   <div id="ppResults"></div>
 </section>
+<select id="ppCategory" style="padding:12px;width:90%;margin:10px 0;border-radius:8px;">
+  <option value="">All Categories</option>
+  <option value="Food">Food</option>
+  <option value="Phones">Phones</option>
+  <option value="Electronics">Electronics</option>
+  <option value="Computers">Computers</option>
+  <option value="Accessories">Accessories</option>
+</select>
+<script>
 
 <script>
 const ppProducts = [
-  {name:"Cooking Oil 1L",price:250,shop:"Demo Shop"},
-  {name:"Sugar 2kg",price:320,shop:"Demo Shop"},
-  {name:"Rice 2kg",price:300,shop:"Demo Shop"},
-  {name:"Unga 2kg",price:180,shop:"Demo Shop"},
-  {name:"Milk 1L",price:80,shop:"Demo Shop"}
+  {name:"Cooking Oil 1L",category:"Food",price:250,shop:"Demo Shop"},
+  {name:"Sugar 2kg",category:"Food",price:320,shop:"Demo Shop"},
+  {name:"Rice 2kg",category:"Food",price:300,shop:"Demo Shop"},
+  {name:"Unga 2kg",category:"Food",price:180,shop:"Demo Shop"},
+  {name:"Milk 1L",category:"Food",price:80,shop:"Demo Shop"},
+  {name:"Samsung Phone",category:"Phones",price:15000,shop:"Demo Shop"},
+  {name:"HP Laptop",category:"Computers",price:45000,shop:"Demo Shop"},
+  {name:"Bluetooth Speaker",category:"Electronics",price:1800,shop:"Demo Shop"},
+  {name:"Oraimo Earbuds",category:"Accessories",price:2500,shop:"Demo Shop"}
+];
+
+function ppDisplayProducts(search="") {
+  const results = document.getElementById("ppResults");
+  const category = document.getElementById("ppCategory").value;
+
+  const filtered = ppProducts.filter(p =>
+    p.name.toLowerCase().includes(search.toLowerCase()) &&
+    (!category || p.category === category)
+  );
+
+  results.innerHTML = filtered.length
+    ? filtered.map(p => `
+      <div style="background:white;padding:12px;margin-top:10px;border-radius:8px;">
+        <strong>${p.name}</strong>
+        <p>${p.category}</p>
+        <p>KSh ${p.price}</p>
+        <small>${p.shop} — Sample price</small>
+      </div>
+    `).join("")
+    : "<p>No products found.</p>";
+}
+
+document.getElementById("ppSearch").addEventListener("input", e => {
+  ppDisplayProducts(e.target.value);
+});
+
+document.getElementById("ppCategory").addEventListener("change", () => {
+  ppDisplayProducts(document.getElementById("ppSearch").value);
+});
+
+ppDisplayProducts();
+</script>
+    
 ];
 
 function ppDisplayProducts(search="") {
