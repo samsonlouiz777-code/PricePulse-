@@ -405,32 +405,6 @@ document.getElementById("ppCategory").addEventListener("change", () => {
 
 ppDisplayProducts();
 </script>
-    
-];
-
-function ppDisplayProducts(search="") {
-  const results = document.getElementById("ppResults");
-  const filtered = ppProducts.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  results.innerHTML = filtered.length
-    ? filtered.map(p => `
-      <div style="background:white;padding:12px;margin-top:10px;border-radius:8px;">
-        <strong>${p.name}</strong>
-        <p>KSh ${p.price}</p>
-        <small>${p.shop} — Sample price</small>
-      </div>
-    `).join("")
-    : "<p>No products found.</p>";
-}
-
-document.getElementById("ppSearch").addEventListener("input", e => {
-  ppDisplayProducts(e.target.value);
-});
-
-ppDisplayProducts();
-</script>
 
 <section id="seller-comparison" style="padding:20px;background:#f1f5f9;border-radius:14px;margin:20px 0;">
   <h2>🇰🇪 Kenyan Seller Comparison</h2>
