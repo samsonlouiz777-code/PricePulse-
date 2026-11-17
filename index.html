@@ -437,7 +437,103 @@ function compareSellers() {
   `;
 }
 </script>
-    
+ 
+<section id="report-price" style="padding:20px;margin:20px 10px;background:#eef7f1;border-radius:14px;">
+  <h2 style="color:#087a45;">📢 Report a Product Price</h2>
+  <p>Help Kenyans discover affordable products.</p>
+
+  <form id="priceReportForm">
+    <input id="reportProduct" required placeholder="Product name"
+      style="width:100%;padding:13px;margin:7px 0;">
+
+    <input id="reportShop" required placeholder="Shop or seller name"
+      style="width:100%;padding:13px;margin:7px 0;">
+
+    <input id="reportTown" required placeholder="Town e.g. Kisumu"
+      style="width:100%;padding:13px;margin:7px 0;">
+
+    <input id="reportPrice" type="number" min="1" step="1" required
+      placeholder="Price in KSh"
+      style="width:100%;padding:13px;margin:7px 0;">
+
+    <button type="submit" style="width:100%;margin-top:10px;">
+      Submit Price
+    </button>
+  </form>
+
+  <p id="reportMessage"></p>
+  <h3>Submitted Price Reports</h3>
+  <div id="reportList"></div>
+  <small>Demo version: reports are saved only on this device and are not yet shared with other users. All reports need verification.</small>
+</section>
+
+<script>
+(function () {
+  const form = document.getElementById("priceReportForm");
+  const list = document.getElementById("reportList");
+  const message = document.getElementById("reportMessage");
+
+  function getReports() {
+    try {
+      return JSON.parse(localStorage.getItem("ppPriceReports") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function displayReports() {
+    list.replaceChildren();
+
+    getReports().forEach(report => {
+      const card = document.createElement("div");
+      card.style.cssText =
+        "background:white;padding:12px;margin:10px 0;border-radius:9px;";
+
+      const details = document.createElement("p");
+      details.textContent =
+        report.product + " | " + report.shop + " | " +
+        report.town + " | KSh " + report.price;
+
+      const status = document.createElement("small");
+      status.textContent = "Pending verification";
+
+      card.append(details, status);
+      list.appendChild(card);
+    });
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const report = {
+      product: document.getElementById("reportProduct").value.trim(),
+      shop: document.getElementById("reportShop").value.trim(),
+      town: document.getElementById("reportTown").value.trim(),
+      price: Number(document.getElementById("reportPrice").value)
+    };
+
+    if (!report.product || !report.shop || !report.town ||
+        !Number.isFinite(report.price) || report.price <= 0) {
+      message.textContent = "Please enter valid information.";
+      return;
+    }
+
+    try {
+      const reports = getReports();
+      reports.unshift(report);
+      localStorage.setItem("ppPriceReports", JSON.stringify(reports));
+      message.textContent = "Price report saved successfully!";
+      form.reset();
+      displayReports();
+    } catch {
+      message.textContent = "Could not save. Please check device storage.";
+    }
+  });
+
+  displayReports();
+})();
+</script>
+   
 </body>
                 </html>
                 
